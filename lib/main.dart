@@ -46,6 +46,20 @@ class CalculatorScreenState extends State<CalculatorScreen> {
           result = 'Error';
           expression = '';
         }
+      }
+      else if (buttonText == '^2') {
+        try {
+          Expression exp = Expression.parse(expression);
+          const evaluator = ExpressionEvaluator();
+          var evalResult = evaluator.eval(exp, {});
+          var squaredResult = evalResult * evalResult;
+          
+          result = '$expression^2 = $squaredResult';
+          expression = squaredResult.toString();
+        } catch (e) {
+          result = 'Error';
+          expression = '';
+        }
       } else {
         expression += buttonText;
       }
@@ -129,9 +143,14 @@ class CalculatorScreenState extends State<CalculatorScreen> {
               Row(
                 children: <Widget>[
                   buildButton('0', Colors.grey[200]!),
-                  buildButton('C', Colors.red),
                   buildButton('=', Colors.green),
+                  buildButton('^2', Colors.orange),
                   buildButton('+', Colors.orange),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  buildButton('C', Colors.red),
                 ],
               ),
             ],
